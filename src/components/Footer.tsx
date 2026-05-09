@@ -2,6 +2,7 @@
 
 import { Star, Code2, MessageCircle, Mail, ArrowUp, Send, Rss } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 const socialLinks = [
   { icon: Code2, label: "GitHub", href: "https://github.com", bg: "#FF6B6B" },
@@ -51,7 +52,6 @@ export default function Footer() {
             <div className="space-y-3">
               {[
                 { label: "邮件", value: "a18846441691@163.com", href: "mailto:a18846441691@163.com" },
-                { label: "生日", value: "1997-07-02", href: "#" },
                 { label: "角色", value: "AI 训练师 · 原后端工程师", href: "#" },
               ].map((item, i) => (
                 <a
@@ -64,6 +64,19 @@ export default function Footer() {
                   <span className="font-black text-base">{item.value}</span>
                 </a>
               ))}
+              {/* WeChat QR */}
+              <div
+                className="border-4 border-black bg-white p-4"
+                style={{ boxShadow: "4px 4px 0px 0px #000" }}
+              >
+                <span className="font-black text-xs uppercase tracking-widest text-gray-500 block mb-3">微信</span>
+                <div className="flex items-center gap-4">
+                  <div className="border-4 border-black relative w-24 h-24 shrink-0" style={{ boxShadow: "4px 4px 0px 0px #000" }}>
+                    <Image src="/wechat-qr.jpg" alt="微信二维码" fill className="object-cover" />
+                  </div>
+                  <p className="font-bold text-sm leading-relaxed">扫码添加微信，欢迎交流 AI 评测与工程话题 👋</p>
+                </div>
+              </div>
             </div>
           </div>
 

@@ -10,8 +10,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "我的个人主页",
-  description: "个人网站 — 专精、项目、生活与作品集",
+  title: "于昊天 · AI 训练师",
+  description: "于昊天个人主页 — AI 评测工程师，专注大模型横评与自动化工作流搭建",
 };
 
 export default function RootLayout({

@@ -7,7 +7,7 @@ const socialLinks = [
   { icon: Code2, label: "GitHub", href: "https://github.com", bg: "#FF6B6B" },
   { icon: MessageCircle, label: "Twitter/X", href: "https://x.com", bg: "#FFD93D" },
   { icon: Rss, label: "Blog", href: "#", bg: "#C4B5FD" },
-  { icon: Mail, label: "邮件", href: "mailto:hello@example.com", bg: "#FF6B6B" },
+  { icon: Mail, label: "邮件", href: "mailto:a18846441691@163.com", bg: "#FF6B6B" },
 ];
 
 export default function Footer() {
@@ -50,9 +50,9 @@ export default function Footer() {
             {/* Contact info */}
             <div className="space-y-3">
               {[
-                { label: "邮件", value: "hello@example.com", href: "mailto:hello@example.com" },
-                { label: "微信", value: "scan_my_qr_code", href: "#" },
-                { label: "位置", value: "中国 · 北京", href: "#" },
+                { label: "邮件", value: "a18846441691@163.com", href: "mailto:a18846441691@163.com" },
+                { label: "生日", value: "1997-07-02", href: "#" },
+                { label: "角色", value: "AI 训练师 · 原后端工程师", href: "#" },
               ].map((item, i) => (
                 <a
                   key={i}
@@ -155,10 +155,10 @@ export default function Footer() {
                 <Star className="w-3 h-3 inline fill-[#FFD93D] stroke-none mr-1" />
                 ME
               </div>
-              <span className="font-black text-sm uppercase tracking-wide">张明远</span>
+              <span className="font-black text-sm uppercase tracking-wide">于昊天</span>
             </div>
             <p className="font-bold text-sm text-white/50 uppercase tracking-widest">
-              © 2024 · 用代码与咖啡构建
+              © 2024 · 敢学，能学，会学，说到做到
             </p>
             <div className="flex gap-4">
               {["关于", "隐私", "RSS"].map((item) => (

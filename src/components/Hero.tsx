@@ -136,7 +136,7 @@ export default function Hero() {
                   style={{ boxShadow: "6px 6px 0px 0px #000" }}
                 >
                   <Image
-                    src="/avatar.jpg"
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/avatar.jpg`}
                     alt="头像"
                     fill
                     className="object-cover"

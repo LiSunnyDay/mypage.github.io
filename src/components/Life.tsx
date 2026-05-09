@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { Heart, Star } from "lucide-react";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const lifePhotos = [
-  { src: "/life/life1.jpg", label: "生活瞬间" },
-  { src: "/life/life2.jpg", label: "生活瞬间" },
-  { src: "/life/life3.jpg", label: "生活瞬间" },
-  { src: "/life/life4.jpg", label: "生活瞬间" },
-  { src: "/life/life5.jpg", label: "生活瞬间" },
-  { src: "/life/life6.jpg", label: "生活瞬间" },
-  { src: "/life/life7.jpg", label: "生活瞬间" },
-  { src: "/life/life8.jpg", label: "生活瞬间" },
-  { src: "/life/life9.jpg", label: "生活瞬间" },
+  { src: `${base}/life/life1.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life2.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life3.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life4.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life5.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life6.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life7.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life8.jpg`, label: "生活瞬间" },
+  { src: `${base}/life/life9.jpg`, label: "生活瞬间" },
 ];
 
 const rotations = ["-rotate-1", "rotate-1", "-rotate-2", "rotate-2", "-rotate-1", "rotate-1", "rotate-2", "-rotate-2", "rotate-1"];

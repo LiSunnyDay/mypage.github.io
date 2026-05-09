@@ -70,7 +70,7 @@ export default function Footer() {
                 <span className="font-black text-xs uppercase tracking-widest text-gray-500 block mb-3">微信</span>
                 <div className="flex items-center gap-4">
                   <div className="border-4 border-black relative w-24 h-24 shrink-0" style={{ boxShadow: "4px 4px 0px 0px #000" }}>
-                    <Image src="/wechat-qr.jpg" alt="微信二维码" fill className="object-cover" />
+                    <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/wechat-qr.jpg`} alt="微信二维码" fill className="object-cover" />
                   </div>
                   <p className="font-bold text-sm leading-relaxed">扫码添加微信，欢迎交流 AI 评测与工程话题 👋</p>
                 </div>

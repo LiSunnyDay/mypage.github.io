@@ -1,14 +1,12 @@
 "use client";
 
-import { Star, Code2, MessageCircle, Mail, ArrowUp, Send, Rss } from "lucide-react";
+import { Star, Code2, Mail, ArrowUp, Send } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
 const socialLinks = [
-  { icon: Code2, label: "GitHub", href: "https://github.com", bg: "#FF6B6B" },
-  { icon: MessageCircle, label: "Twitter/X", href: "https://x.com", bg: "#FFD93D" },
-  { icon: Rss, label: "Blog", href: "#", bg: "#C4B5FD" },
-  { icon: Mail, label: "邮件", href: "mailto:a18846441691@163.com", bg: "#FF6B6B" },
+  { icon: Code2, label: "GitHub", href: "https://github.com/LiSunnyDay", bg: "#FF6B6B" },
+  { icon: Mail, label: "邮件", href: "mailto:a18846441691@163.com", bg: "#FFD93D" },
 ];
 
 export default function Footer() {
@@ -174,7 +172,7 @@ export default function Footer() {
               © 2024 · 敢学，能学，会学，说到做到
             </p>
             <div className="flex gap-4">
-              {["关于", "隐私", "RSS"].map((item) => (
+              {["关于", "隐私"].map((item) => (
                 <a key={item} href="#" className="font-black text-xs uppercase tracking-widest text-white/50 hover:text-white transition-colors duration-100">
                   {item}
                 </a>

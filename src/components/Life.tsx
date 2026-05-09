@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Heart, Star } from "lucide-react";
+import Lightbox from "./Lightbox";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const lifePhotos = [
@@ -29,6 +31,8 @@ const funFacts = [
 ];
 
 export default function Life() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   return (
     <section id="life" className="border-t-4 border-black">
       {/* Section header */}
@@ -73,8 +77,9 @@ export default function Life() {
           {lifePhotos.map((photo, i) => (
             <div
               key={i}
-              className={`border-4 border-black bg-white overflow-hidden group transition-all duration-200 hover:-translate-y-2 ${rotations[i]}`}
+              className={`border-4 border-black bg-white overflow-hidden group transition-all duration-200 hover:-translate-y-2 ${rotations[i]} cursor-pointer`}
               style={{ boxShadow: "8px 8px 0px 0px #000" }}
+              onClick={() => setActiveIndex(i)}
             >
               {/* Photo header */}
               <div
@@ -140,6 +145,16 @@ export default function Life() {
           ))}
         </div>
       </div>
+
+      {activeIndex !== null && (
+        <Lightbox
+          src={lifePhotos[activeIndex].src}
+          alt={`生活照片 ${activeIndex + 1}`}
+          onClose={() => setActiveIndex(null)}
+          onPrev={activeIndex > 0 ? () => setActiveIndex(activeIndex - 1) : undefined}
+          onNext={activeIndex < lifePhotos.length - 1 ? () => setActiveIndex(activeIndex + 1) : undefined}
+        />
+      )}
     </section>
   );
 }

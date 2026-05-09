@@ -7,8 +7,8 @@ const navLinks = [
   { label: "主页", href: "#home" },
   { label: "专精", href: "#expertise" },
   { label: "项目", href: "#projects" },
-  { label: "生活", href: "#life" },
   { label: "作品集", href: "#portfolio" },
+  { label: "生活", href: "#life" },
 ];
 
 export default function Navigation() {

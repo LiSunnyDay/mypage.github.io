@@ -1,8 +1,9 @@
 "use client";
 
-import { Star, Code2, Mail, ArrowUp, Send } from "lucide-react";
+import { Star, Code2, Mail, ArrowUp, Send, ZoomIn } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import Lightbox from "./Lightbox";
 
 const socialLinks = [
   { icon: Code2, label: "GitHub", href: "https://github.com/LiSunnyDay", bg: "#FF6B6B" },
@@ -12,6 +13,8 @@ const socialLinks = [
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const qrSrc = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/wechat-qr.jpg`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,8 +72,16 @@ export default function Footer() {
               >
                 <span className="font-black text-xs uppercase tracking-widest text-gray-500 block mb-3">微信</span>
                 <div className="flex items-center gap-4">
-                  <div className="border-4 border-black relative w-24 h-24 shrink-0" style={{ boxShadow: "4px 4px 0px 0px #000" }}>
-                    <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/wechat-qr.jpg`} alt="微信二维码" fill className="object-cover" />
+                  <div
+                    className="border-4 border-black relative w-24 h-24 shrink-0 cursor-pointer group"
+                    style={{ boxShadow: "4px 4px 0px 0px #000" }}
+                    onClick={() => setShowQR(true)}
+                    title="点击放大"
+                  >
+                    <Image src={qrSrc} alt="微信二维码" fill className="object-cover" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                      <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 stroke-[3px] transition-opacity" />
+                    </div>
                   </div>
                   <p className="font-bold text-sm leading-relaxed">扫码添加微信，欢迎交流 AI 评测与工程话题 👋</p>
                 </div>
@@ -181,6 +192,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {showQR && (
+        <Lightbox
+          src={qrSrc}
+          alt="微信二维码"
+          onClose={() => setShowQR(false)}
+        />
+      )}
     </footer>
   );
 }

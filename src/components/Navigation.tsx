@@ -11,14 +11,41 @@ const navLinks = [
   { label: "生活", href: "#life" },
 ];
 
+const sectionIds = navLinks.map((l) => l.href.slice(1));
+
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState("home");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const visibleRatios: Record<string, number> = {};
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          visibleRatios[id] = entry.intersectionRatio;
+          const best = sectionIds.reduce((a, b) =>
+            (visibleRatios[b] ?? 0) > (visibleRatios[a] ?? 0) ? b : a
+          );
+          setActiveId(best);
+        },
+        { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1] }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   const handleNav = (href: string) => {
@@ -56,17 +83,24 @@ export default function Navigation() {
 
             {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
-                  className="px-3 py-2 font-black text-sm uppercase tracking-widest border-4 border-transparent hover:border-black hover:bg-[#FFD93D] transition-all duration-100"
-                  style={{ cursor: "pointer" }}
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeId === link.href.slice(1);
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                    className="px-3 py-2 font-black text-sm uppercase tracking-widest border-4 transition-all duration-100 hover:border-black hover:bg-[#FFD93D]"
+                    style={{
+                      cursor: "pointer",
+                      borderColor: isActive ? "#000" : "transparent",
+                      backgroundColor: isActive ? "#FFD93D" : "transparent",
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
               <a
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); handleNav("#contact"); }}
@@ -94,20 +128,24 @@ export default function Navigation() {
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-[#FFFDF5] pt-16 border-b-4 border-black md:hidden">
           <div className="flex flex-col p-6 gap-3">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
-                className="block px-6 py-4 font-black text-xl uppercase tracking-widest border-4 border-black transition-all duration-100 hover:bg-[#FFD93D]"
-                style={{
-                  boxShadow: "6px 6px 0px 0px #000",
-                  transform: i % 2 === 0 ? "rotate(-1deg)" : "rotate(1deg)",
-                }}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link, i) => {
+              const isActive = activeId === link.href.slice(1);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => { e.preventDefault(); handleNav(link.href); }}
+                  className="block px-6 py-4 font-black text-xl uppercase tracking-widest border-4 border-black transition-all duration-100 hover:bg-[#FFD93D]"
+                  style={{
+                    boxShadow: "6px 6px 0px 0px #000",
+                    transform: i % 2 === 0 ? "rotate(-1deg)" : "rotate(1deg)",
+                    backgroundColor: isActive ? "#FFD93D" : "transparent",
+                  }}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
             <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); handleNav("#contact"); setMenuOpen(false); }}

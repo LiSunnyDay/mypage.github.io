@@ -35,8 +35,8 @@ export default function Hero() {
                 style={{ boxShadow: "4px 4px 0px 0px #000", transform: "rotate(-2deg)" }}
               >
                 <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-                  AI 评测工程师 · 在职
+                  <span className="w-2 h-2 rounded-full bg-gray-400 inline-block" />
+                  AI 评测工程师 · 离职
                 </span>
               </div>
             </div>

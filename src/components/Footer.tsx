@@ -180,7 +180,7 @@ export default function Footer() {
               <span className="font-black text-sm uppercase tracking-wide">于昊天</span>
             </div>
             <p className="font-bold text-sm text-white/50 uppercase tracking-widest">
-              © 2024 · 敢学，能学，会学，说到做到
+              © {new Date().getFullYear()} · 敢学，能学，会学，说到做到
             </p>
             <div className="flex gap-4">
               {["关于", "隐私"].map((item) => (

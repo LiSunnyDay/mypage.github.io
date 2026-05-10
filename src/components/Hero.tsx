@@ -50,7 +50,8 @@ export default function Hero() {
                 你好，我是
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight tracking-tighter mt-4">
-                于昊天 &nbsp;<span style={{ WebkitTextStroke: "3px #000", color: "transparent" }}>AI</span><span className="text-[#FF6B6B]"> 训练师。</span>
+                <span className="block">于昊天</span>
+                <span className="block"><span style={{ WebkitTextStroke: "3px #000", color: "transparent" }}>AI</span><span className="text-[#FF6B6B]"> 训练师。</span></span>
               </h1>
             </div>
 

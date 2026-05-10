@@ -64,7 +64,7 @@ export default function Life() {
                 个人格言
               </p>
               <p className="font-black text-xl leading-snug">
-                敢学，能学，<br />会学，说到做到。
+                敢学，能学，会学，<br />说到做到。
               </p>
             </div>
           </div>

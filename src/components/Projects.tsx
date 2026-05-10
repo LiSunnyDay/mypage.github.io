@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, Star, Code2, Globe } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Star, X } from "lucide-react";
 
 const projects = [
   {
@@ -69,7 +70,113 @@ const projects = [
   },
 ];
 
+type Project = typeof projects[0];
+
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="border-4 border-black bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        style={{ boxShadow: "12px 12px 0px 0px #000" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal header */}
+        <div
+          className="border-b-4 border-black px-6 py-4 flex items-center justify-between sticky top-0 z-10"
+          style={{ backgroundColor: project.color }}
+        >
+          <div className="flex items-center gap-3">
+            <span className="font-black text-3xl">{project.id}</span>
+            <span className="font-black text-xs uppercase tracking-widest border-2 border-black bg-white px-2 py-1">
+              {project.period}
+            </span>
+          </div>
+          <button
+            className="border-4 border-black bg-black text-white p-1.5 transition-colors hover:bg-[#FF6B6B]"
+            style={{ boxShadow: "3px 3px 0px 0px #fff" }}
+            onClick={onClose}
+            aria-label="关闭"
+          >
+            <X className="w-5 h-5 stroke-[3px]" />
+          </button>
+        </div>
+
+        {/* Modal body */}
+        <div className="p-6 space-y-6">
+          <div>
+            <p className="font-black text-xs uppercase tracking-widest text-gray-500 mb-1">{project.subtitle}</p>
+            <h2 className="font-black text-3xl tracking-tight">{project.title}</h2>
+          </div>
+
+          <div className="border-4 border-black bg-[#FFFDF5] p-4" style={{ boxShadow: "4px 4px 0px 0px #000" }}>
+            <p className="font-bold text-base leading-relaxed">{project.desc}</p>
+          </div>
+
+          {project.stats && (
+            <div>
+              <p className="font-black text-xs uppercase tracking-widest mb-3">核心成果</p>
+              <div className="flex gap-4 flex-wrap">
+                {Object.entries(project.stats).map(([key, val]) => (
+                  <div
+                    key={key}
+                    className="border-4 border-black bg-white px-4 py-3 text-center"
+                    style={{ boxShadow: "4px 4px 0px 0px #000", backgroundColor: project.color }}
+                  >
+                    <div className="font-black text-2xl">{val}</div>
+                    <div className="font-black text-xs uppercase tracking-widest mt-1">{key}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <p className="font-black text-xs uppercase tracking-widest mb-3">项目亮点</p>
+            <ul className="space-y-3">
+              {project.achievements.map((a, i) => (
+                <li key={i} className="flex items-start gap-3 border-4 border-black bg-white p-3" style={{ boxShadow: "4px 4px 0px 0px #000" }}>
+                  <Star className="w-4 h-4 fill-[#FF6B6B] stroke-none shrink-0 mt-0.5" />
+                  <span className="font-bold text-sm leading-relaxed">{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-black text-xs uppercase tracking-widest mb-3">技术栈</p>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="border-2 border-black px-3 py-1.5 text-xs font-black uppercase tracking-wide bg-[#FFFDF5]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Projects() {
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+
   return (
     <section id="projects" className="border-t-4 border-black bg-[#FFFDF5]">
       {/* Section header */}
@@ -103,8 +210,9 @@ export default function Projects() {
         {projects.filter(p => p.featured).map((project) => (
           <div
             key={project.id}
-            className="border-4 border-black bg-white transition-all duration-200 hover:-translate-y-1"
+            className="border-4 border-black bg-white transition-all duration-200 hover:-translate-y-1 cursor-pointer"
             style={{ boxShadow: "12px 12px 0px 0px #000" }}
+            onClick={() => setActiveProject(project)}
           >
             <div className="grid lg:grid-cols-2">
               {/* Left: Visual */}
@@ -163,6 +271,9 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+                <p className="font-black text-xs uppercase tracking-widest text-gray-400 flex items-center gap-1">
+                  <Star className="w-3 h-3 fill-gray-400 stroke-none" /> 点击查看完整详情
+                </p>
               </div>
             </div>
           </div>
@@ -173,8 +284,9 @@ export default function Projects() {
           {projects.filter(p => !p.featured).map((project) => (
             <div
               key={project.id}
-              className="border-4 border-black bg-white group transition-all duration-200 hover:-translate-y-2"
+              className="border-4 border-black bg-white group transition-all duration-200 hover:-translate-y-2 cursor-pointer"
               style={{ boxShadow: "8px 8px 0px 0px #000" }}
+              onClick={() => setActiveProject(project)}
             >
               <div
                 className="border-b-4 border-black px-5 py-4 flex justify-between items-center"
@@ -204,6 +316,9 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+                <p className="font-black text-xs uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors">
+                  点击查看详情 →
+                </p>
               </div>
             </div>
           ))}
@@ -216,11 +331,15 @@ export default function Projects() {
             <Star className="w-10 h-10 fill-[#FFD93D] stroke-none animate-spin-slow" />
             <div>
               <p className="font-black text-sm uppercase tracking-widest text-[#FFD93D] mb-3">格言</p>
-              <h3 className="font-black text-2xl leading-snug">敢学，能学，<br />会学，说到做到。</h3>
+              <h3 className="font-black text-2xl leading-snug">敢学，能学，会学，<br />说到做到。</h3>
             </div>
           </div>
         </div>
       </div>
+
+      {activeProject && (
+        <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      )}
     </section>
   );
 }

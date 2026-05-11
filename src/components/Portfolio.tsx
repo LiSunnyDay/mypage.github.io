@@ -1,73 +1,198 @@
 "use client";
 
-import { ArrowUpRight, Star, Play, Image as ImageIcon, FileText, Layers } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
+import { Star, ChevronDown, ChevronUp, X, ChevronLeft, ChevronRight } from "lucide-react";
 
-const portfolioItems = [
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+const works = [
   {
     id: "A",
-    title: "品牌视觉系统",
-    category: "设计",
-    desc: "为一家初创科技公司设计的完整品牌体系，包括 Logo、配色、字体和组件库，覆盖 Web 和 App 两端。",
-    type: "design",
+    title: "芙莉莲",
+    subtitle: "葬送的芙莉莲 · 收藏版史诗海报",
+    src: `${base}/portfolio/1.jpg`,
+    model: "GPT-image-2",
     color: "#C4B5FD",
-    tags: ["Figma", "品牌设计", "设计系统"],
-    width: "lg:col-span-2",
-    link: "#",
+    prompt: `根据 【芙莉莲】 自动生成一张收藏版史诗叙事海报：
+
+巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
+
+整体不是普通拼贴，而是高级的剪影轮廓填充式叙事合成，带有双重曝光式联想，但更偏电影海报与梦幻水彩插画融合风格；
+
+画面具有柔和空气透视、轻雾化过渡、纸张颗粒质感，边缘带飞白与自然刷痕，大面积留白，版式克制高级，整体氛围安静、宏大、神圣、怀旧、富有诗意与传说感。
+
+风格、色彩、场景、材质需根据 【角色性格】 自动适配。
+
+所有视觉元素必须强绑定主题，一眼即可识别，画面干净统一，不要杂乱拼贴，不要模板化背景，不要廉价奇幻素材。
+
+画面中需自然加入专属签名 【Yu】，作为海报设计的一部分，位置低调但清晰（可放在左下角、右下角或标题附近），风格需与整体版式统一，类似收藏版海报的作者落款或设计印章；
+
+签名字体要求精致、克制、高级，不可过大，不可破坏主体构图，不可显得突兀或廉价。
+
+主角为：【芙莉莲】`,
   },
   {
     id: "B",
-    title: "数据可视化大屏",
-    category: "前端开发",
-    desc: "基于 D3.js 构建的实时数据大屏，支持 10+ 种图表类型和动态数据接入。",
-    type: "dev",
-    color: "#FF6B6B",
-    tags: ["D3.js", "WebSocket", "Canvas"],
-    width: "lg:col-span-1",
-    link: "#",
-  },
-  {
-    id: "C",
-    title: "运动 App UI 套件",
-    category: "UI 设计",
-    desc: "针对健身跟踪应用的 80+ 个组件 UI 套件，含深色/浅色两套主题。",
-    type: "design",
+    title: "罗芭",
+    subtitle: "Apex Legends · 收藏版史诗海报",
+    src: `${base}/portfolio/2.jpg`,
+    model: "GPT-image-2",
     color: "#FFD93D",
-    tags: ["Figma", "组件库", "移动端"],
-    width: "lg:col-span-1",
-    link: "#",
-  },
-  {
-    id: "D",
-    title: "开源组件库",
-    category: "开源项目",
-    desc: "基于 Tailwind CSS 的 React 组件库，GitHub 1.2K Star，被 300+ 项目引用。",
-    type: "dev",
-    color: "#C4B5FD",
-    tags: ["React", "Tailwind", "开源"],
-    width: "lg:col-span-2",
-    link: "#",
-  },
-  {
-    id: "E",
-    title: "交互动效设计",
-    category: "动效",
-    desc: "一组精心设计的微交互动效集合，涵盖加载、切换、反馈等场景。",
-    type: "motion",
-    color: "#FF6B6B",
-    tags: ["Lottie", "After Effects", "Framer"],
-    width: "lg:col-span-1",
-    link: "#",
+    prompt: `根据 【罗芭/史诗感】 自动生成一张收藏版史诗叙事海报：
+
+巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
+
+整体不是普通拼贴，而是高级的剪影轮廓填充式叙事合成，带有双重曝光式联想，但更偏电影海报与梦幻水彩插画融合风格；
+
+画面具有柔和空气透视、轻雾化过渡、纸张颗粒质感，边缘带飞白与自然刷痕，大面积留白，版式克制高级，整体氛围安静、宏大、神圣、怀旧、富有诗意与传说感。
+
+风格、色彩、场景、材质需根据 【角色性格】 自动适配。
+
+所有视觉元素必须强绑定主题，一眼即可识别，画面干净统一，不要杂乱拼贴，不要模板化背景，不要廉价奇幻素材。
+
+画面中需自然加入专属签名 【Yu】，作为海报设计的一部分，位置低调但清晰（可放在左下角、右下角或标题附近），风格需与整体版式统一，类似收藏版海报的作者落款或设计印章；
+
+签名字体要求精致、克制、高级，不可过大，不可破坏主体构图，不可显得突兀或廉价。
+
+主角为：【罗芭】`,
   },
 ];
 
-const typeIcon = {
-  design: ImageIcon,
-  dev: FileText,
-  motion: Play,
-  other: Layers,
-};
+function ImageLightbox({ index, onClose }: { index: number; onClose: () => void }) {
+  const [current, setCurrent] = useState(index);
+  const work = works[current];
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+      onClick={onClose}
+    >
+      <button
+        className="absolute top-4 right-4 border-4 border-white bg-black text-white p-2 z-10 hover:bg-[#FF6B6B] transition-colors"
+        style={{ boxShadow: "4px 4px 0px 0px #FF6B6B" }}
+        onClick={onClose}
+        aria-label="关闭"
+      >
+        <X className="w-6 h-6 stroke-[3px]" />
+      </button>
+      {current > 0 && (
+        <button
+          className="absolute left-4 top-1/2 -translate-y-1/2 border-4 border-white bg-black text-white p-2 z-10 hover:bg-[#FFD93D] hover:border-[#FFD93D] transition-colors"
+          style={{ boxShadow: "4px 4px 0px 0px #FFD93D" }}
+          onClick={(e) => { e.stopPropagation(); setCurrent(current - 1); }}
+          aria-label="上一张"
+        >
+          <ChevronLeft className="w-6 h-6 stroke-[3px]" />
+        </button>
+      )}
+      {current < works.length - 1 && (
+        <button
+          className="absolute right-4 top-1/2 -translate-y-1/2 border-4 border-white bg-black text-white p-2 z-10 hover:bg-[#FFD93D] hover:border-[#FFD93D] transition-colors"
+          style={{ boxShadow: "4px 4px 0px 0px #FFD93D" }}
+          onClick={(e) => { e.stopPropagation(); setCurrent(current + 1); }}
+          aria-label="下一张"
+        >
+          <ChevronRight className="w-6 h-6 stroke-[3px]" />
+        </button>
+      )}
+      <div
+        className="border-4 border-white"
+        style={{ boxShadow: "8px 8px 0px 0px #FF6B6B" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={work.src}
+          alt={work.title}
+          style={{ maxWidth: "85vw", maxHeight: "85vh", display: "block", objectFit: "contain" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function WorkCard({ work, index, onImageClick }: {
+  work: typeof works[0];
+  index: number;
+  onImageClick: (i: number) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      className="border-4 border-black bg-white"
+      style={{ boxShadow: "12px 12px 0px 0px #000" }}
+    >
+      {/* Card header */}
+      <div
+        className="border-b-4 border-black px-5 py-3 flex items-center justify-between"
+        style={{ backgroundColor: work.color }}
+      >
+        <div className="flex items-center gap-3">
+          <span className="font-black text-2xl border-4 border-black bg-white px-2 py-0.5" style={{ boxShadow: "3px 3px 0px 0px #000" }}>{work.id}</span>
+          <div>
+            <p className="font-black text-lg leading-none">{work.title}</p>
+            <p className="font-bold text-xs uppercase tracking-widest opacity-70 mt-0.5">{work.subtitle}</p>
+          </div>
+        </div>
+        <span className="border-2 border-black bg-black text-white font-black text-xs px-2 py-1 uppercase tracking-widest">
+          {work.model}
+        </span>
+      </div>
+
+      {/* Image */}
+      <div
+        className="border-b-4 border-black relative overflow-hidden cursor-pointer group"
+        style={{ aspectRatio: "3/4", maxHeight: "600px" }}
+        onClick={() => onImageClick(index)}
+      >
+        <Image
+          src={work.src}
+          alt={work.title}
+          fill
+          className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+          <div className="border-4 border-white bg-black/70 text-white font-black text-sm px-4 py-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+            点击放大
+          </div>
+        </div>
+      </div>
+
+      {/* Prompt */}
+      <div className="p-5">
+        <div className="flex items-center justify-between mb-3">
+          <p className="font-black text-xs uppercase tracking-widest flex items-center gap-1">
+            <Star className="w-3 h-3 fill-black stroke-none" /> 生成 Prompt
+          </p>
+          <button
+            className="flex items-center gap-1 font-black text-xs uppercase tracking-widest border-2 border-black px-2 py-1 hover:bg-[#FFD93D] transition-colors"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? <><ChevronUp className="w-3 h-3 stroke-[3px]" />收起</> : <><ChevronDown className="w-3 h-3 stroke-[3px]" />展开</>}
+          </button>
+        </div>
+        <div
+          className="border-4 border-black bg-[#FFFDF5] p-4 overflow-hidden transition-all duration-300"
+          style={{
+            maxHeight: expanded ? "600px" : "80px",
+            boxShadow: "4px 4px 0px 0px #000",
+          }}
+        >
+          <pre className="font-bold text-xs leading-relaxed whitespace-pre-wrap break-words">{work.prompt}</pre>
+        </div>
+        {!expanded && (
+          <p className="font-bold text-xs text-gray-400 mt-1 text-right">……点击展开查看完整 Prompt</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Portfolio() {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   return (
     <section id="portfolio" className="border-t-4 border-black">
       {/* Section header */}
@@ -82,98 +207,47 @@ export default function Portfolio() {
               作品集
             </div>
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-none tracking-tighter text-white">
-              精心打磨的<br />
+              AI 创作<br />
               <span style={{ WebkitTextStroke: "3px #fff", color: "transparent" }}>
-                设计与代码。
+                海报设计。
               </span>
             </h2>
           </div>
-          <div
-            className="border-4 border-white text-white px-6 py-3 font-black text-sm uppercase tracking-widest"
-            style={{ boxShadow: "6px 6px 0px 0px #FF6B6B" }}
-          >
-            {portfolioItems.length} 件作品
+          <div className="space-y-2 text-right">
+            <div
+              className="border-4 border-white text-white px-4 py-2 font-black text-sm uppercase tracking-widest"
+              style={{ boxShadow: "6px 6px 0px 0px #FF6B6B" }}
+            >
+              Prompt 设计 · GPT-image-2 生成
+            </div>
+            <p className="font-bold text-xs text-white/50 uppercase tracking-widest">{works.length} 件作品</p>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Portfolio grid */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {portfolioItems.map((item, i) => {
-            const Icon = typeIcon[item.type as keyof typeof typeIcon] || Layers;
-            return (
-              <div
-                key={i}
-                className={`border-4 border-black bg-white group transition-all duration-200 hover:-translate-y-2 ${item.width}`}
-                style={{ boxShadow: "8px 8px 0px 0px #000" }}
-              >
-                {/* Visual area */}
-                <div
-                  className="border-b-4 border-black p-8 min-h-40 flex flex-col justify-between relative overflow-hidden"
-                  style={{ backgroundColor: item.color }}
-                >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  {/* Top row */}
-                  <div className="relative z-10 flex justify-between items-start">
-                    <div
-                      className="border-4 border-black bg-white font-black text-3xl px-3 py-1"
-                      style={{ boxShadow: "4px 4px 0px 0px #000" }}
-                    >
-                      {item.id}
-                    </div>
-                    <a
-                      href={item.link}
-                      className="border-4 border-black bg-black text-white p-2 transition-all duration-100 hover:bg-white hover:text-black active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
-                      style={{ boxShadow: "4px 4px 0px 0px #fff" }}
-                    >
-                      <ArrowUpRight className="w-5 h-5 stroke-[3px]" />
-                    </a>
-                  </div>
-                  {/* Bottom: category badge */}
-                  <div className="relative z-10 flex items-center gap-2">
-                    <div className="border-4 border-black bg-black text-white p-1.5">
-                      <Icon className="w-4 h-4 stroke-[3px]" />
-                    </div>
-                    <span
-                      className="border-2 border-black bg-white px-3 py-1 font-black text-xs uppercase tracking-widest"
-                    >
-                      {item.category}
-                    </span>
-                  </div>
-                </div>
-                {/* Content */}
-                <div className="p-5 space-y-3">
-                  <h3 className="font-black text-2xl tracking-tight">{item.title}</h3>
-                  <p className="font-bold text-sm leading-relaxed">{item.desc}</p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {item.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="border-2 border-black px-2 py-0.5 text-xs font-black uppercase tracking-wide bg-[#FFFDF5]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid sm:grid-cols-2 gap-8 lg:gap-12">
+          {works.map((work, i) => (
+            <WorkCard
+              key={work.id}
+              work={work}
+              index={i}
+              onImageClick={setLightboxIndex}
+            />
+          ))}
         </div>
 
-        {/* CTA Banner */}
+        {/* Bottom banner */}
         <div
-          className="mt-12 border-4 border-black bg-[#FF6B6B] p-8 flex flex-col sm:flex-row items-center justify-between gap-6"
+          className="mt-12 border-4 border-black bg-[#C4B5FD] p-8 flex flex-col sm:flex-row items-center justify-between gap-6"
           style={{ boxShadow: "12px 12px 0px 0px #000" }}
         >
           <div>
             <p className="font-black text-sm uppercase tracking-widest mb-2 flex items-center gap-2">
               <Star className="w-4 h-4 fill-black stroke-none animate-spin-slow" />
-              有想法？
+              创作理念
             </p>
-            <h3 className="font-black text-3xl sm:text-4xl leading-tight">一起做点有趣的东西</h3>
+            <h3 className="font-black text-2xl sm:text-3xl leading-tight">用 Prompt 设计<br />驱动 AI 创作</h3>
           </div>
           <a
             href="#contact"
@@ -184,10 +258,14 @@ export default function Portfolio() {
             className="shrink-0 flex items-center gap-2 px-8 py-4 font-black text-base uppercase tracking-wide border-4 border-black bg-black text-white transition-all duration-100 hover:bg-white hover:text-black active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
             style={{ boxShadow: "6px 6px 0px 0px #000" }}
           >
-            开始合作 <ArrowUpRight className="w-5 h-5 stroke-[3px]" />
+            联系合作
           </a>
         </div>
       </div>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox index={lightboxIndex} onClose={() => setLightboxIndex(null)} />
+      )}
     </section>
   );
 }

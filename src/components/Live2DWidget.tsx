@@ -43,11 +43,15 @@ export default function Live2DWidget() {
       win.initWidget({
         waifuPath: "/live2d/waifu-tips.json",
         cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
-        tools: ["hitokoto", "switch-model", "switch-texture", "photo", "info", "quit"],
+        // switch-texture omitted: Miku has only one texture, clicking it would load the
+        // default fghrsh model (Tia) via localStorage.modelId instead of reloading Miku
+        tools: ["hitokoto", "switch-model", "photo", "info", "quit"],
       });
-      // After initWidget sets up the DOM and canvas, load Miku as the initial character
+      // After initWidget sets up DOM and canvas, load Miku and reset modelId so that
+      // switch-model cycles through fghrsh characters starting from index 0 (Pio)
       setTimeout(() => {
         win.loadlive2d?.("live2d", MIKU);
+        localStorage.setItem("modelId", "-1");
       }, 1000);
     }).catch(console.error);
 

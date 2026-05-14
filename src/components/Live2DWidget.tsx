@@ -70,6 +70,50 @@ export default function Live2DWidget() {
         // Load 22娘 from self-hosted files for instant display
         win.loadlive2d?.("live2d", "/live2d/22niang/index.json");
 
+        // --- Section introductions on hover ---
+        // Uses closest() so any child element inside a section triggers the message.
+        // Mirrors the widget's own o() function: respects sessionStorage priority (8)
+        // so we don't override higher-priority widget messages.
+        const sectionMsgs: Record<string, string[]> = {
+          home:      ["欢迎来到主页！这里是主人的个人空间～", "来了解一下主人吧！"],
+          expertise: ["这里展示了主人的专业技能和领域专长！", "主人都精通哪些技术呢？来看看吧～"],
+          projects:  ["这里是主人的项目展示区，每个都倾注了很多心血哦！", "快来看看主人做了哪些有趣的项目！"],
+          portfolio: ["这里是 AI 艺术作品集，每张都是精心创作的～", "这些图片全都是用 AI 生成的哦，厉害吧！"],
+          life:      ["这里记录了主人的日常生活和兴趣爱好～", "来看看主人最近在做什么吧！"],
+          contact:   ["想联系主人吗？这里有所有的联系方式哦！", "有什么想说的，快来找主人聊聊吧～"],
+        };
+        let activeSection = "";
+        let sectionTimer: ReturnType<typeof setTimeout> | null = null;
+        const showSectionMsg = (text: string) => {
+          if (parseInt(sessionStorage.getItem("waifu-text") ?? "0") > 8) return;
+          if (sectionTimer) clearTimeout(sectionTimer);
+          sessionStorage.setItem("waifu-text", "8");
+          const tips = document.getElementById("waifu-tips");
+          if (!tips) return;
+          tips.innerHTML = text;
+          tips.classList.add("waifu-tips-active");
+          sectionTimer = setTimeout(() => {
+            sessionStorage.removeItem("waifu-text");
+            tips.classList.remove("waifu-tips-active");
+            sectionTimer = null;
+          }, 4000);
+        };
+        const onSectionHover = (e: Event) => {
+          const t = e.target as HTMLElement;
+          if (t.closest("#waifu")) return;
+          for (const [id, msgs] of Object.entries(sectionMsgs)) {
+            if (t.closest(`#${id}`)) {
+              if (activeSection === id) return;
+              activeSection = id;
+              showSectionMsg(msgs[Math.floor(Math.random() * msgs.length)]);
+              return;
+            }
+          }
+          activeSection = "";
+        };
+        document.addEventListener("mouseover", onSectionHover as EventListener);
+        docListeners.push(["mouseover", onSectionHover as EventListener]);
+
         // --- Drag support ---
         const waifu = document.getElementById("waifu");
         if (!waifu) return;

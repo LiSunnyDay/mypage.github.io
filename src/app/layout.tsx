@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import Live2DWidget from "@/components/Live2DWidget";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="zh-CN" className={`${spaceGrotesk.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FFFDF5] text-black font-sans font-bold">
         {children}
+        <Live2DWidget />
       </body>
     </html>
   );

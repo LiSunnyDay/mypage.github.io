@@ -6,7 +6,41 @@ import { Star, ChevronDown, ChevronUp, X, ChevronLeft, ChevronRight } from "luci
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+const kawaiPrompt = `照片转化成整体像是彩铅 + 蜡笔 + 手账贴纸 + MS Paint 涂鸦的结合。
+
+使用：粗糙线条、抖动边缘、不均匀上色、纸张纹理、彩铅叠色、蜡笔颗粒感、故意幼稚但很有灵气的画风。
+
+人物变成Q版萌系二次元风格，大眼睛，夸张表情，可爱活泼。
+
+背景加入大量 doodle：爱心、星星、糖果、笑脸云朵、小花、贴纸、游戏UI元素、乱涂乱画符号。
+
+颜色以：粉色、蓝色、紫色、黄色、薄荷色为主。
+
+整体氛围：可爱、混乱、梦幻、少女感、游戏宅手账风、互联网 kawaii aesthetic。
+
+不要精致，不要高级商业插画感，不要真实渲染，不要干净线稿，保留"手绘失败感"和"乱涂鸦感"。`;
+
 const works = [
+  {
+    id: "C",
+    title: "新海天",
+    subtitle: "Apex Legends · Q版战绩卡",
+    src: `${base}/portfolio/3.png`,
+    model: "GPT-image-2",
+    color: "#FDA4AF",
+    aspectRatio: "3/4",
+    prompt: kawaiPrompt,
+  },
+  {
+    id: "D",
+    title: "APEX 主页",
+    subtitle: "Apex Legends · 主页界面重绘",
+    src: `${base}/portfolio/4.png`,
+    model: "GPT-image-2",
+    color: "#BAE6FD",
+    aspectRatio: "4/3",
+    prompt: kawaiPrompt,
+  },
   {
     id: "A",
     title: "芙莉莲",
@@ -14,6 +48,7 @@ const works = [
     src: `${base}/portfolio/1.jpg`,
     model: "GPT-image-2",
     color: "#C4B5FD",
+    aspectRatio: "3/4",
     prompt: `根据 【芙莉莲】 自动生成一张收藏版史诗叙事海报：
 
 巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
@@ -39,6 +74,7 @@ const works = [
     src: `${base}/portfolio/2.jpg`,
     model: "GPT-image-2",
     color: "#FFD93D",
+    aspectRatio: "3/4",
     prompt: `根据 【罗芭/史诗感】 自动生成一张收藏版史诗叙事海报：
 
 巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
@@ -144,14 +180,14 @@ function WorkCard({ work, index, onImageClick }: {
       {/* Image */}
       <div
         className="border-b-4 border-black relative overflow-hidden cursor-pointer group"
-        style={{ aspectRatio: "3/4", maxHeight: "600px" }}
+        style={{ aspectRatio: work.aspectRatio, maxHeight: "600px" }}
         onClick={() => onImageClick(index)}
       >
         <Image
           src={work.src}
           alt={work.title}
           fill
-          className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-300"
+          className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
           <div className="border-4 border-white bg-black/70 text-white font-black text-sm px-4 py-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">

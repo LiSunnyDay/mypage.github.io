@@ -4,22 +4,24 @@ import { useEffect } from "react";
 
 export default function Live2DWidget() {
   useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href =
-      "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/waifu.css";
-    document.head.appendChild(link);
-
-    const script = document.createElement("script");
-    script.src =
-      "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.head.contains(link)) document.head.removeChild(link);
-      if (document.body.contains(script)) document.body.removeChild(script);
-    };
+    import("oh-my-live2d").then(({ loadOml2d }) => {
+      loadOml2d({
+        models: [
+          {
+            path: "https://cdn.jsdelivr.net/npm/live2d-widget-model-miku/assets/miku.model.json",
+            position: [-10, 20],
+            stageStyle: { width: 260 },
+          },
+        ],
+        primaryColor: "#39C5BB",
+        tips: {
+          style: {
+            width: 180,
+            fontSize: 13,
+          },
+        },
+      });
+    });
   }, []);
 
   return null;

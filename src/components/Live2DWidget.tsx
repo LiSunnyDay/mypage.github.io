@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 
-const MIKU = "https://cdn.jsdelivr.net/npm/live2d-widget-model-miku/assets/miku.model.json";
-
 export default function Live2DWidget() {
   useEffect(() => {
     const tags: (HTMLLinkElement | HTMLScriptElement)[] = [];
@@ -41,10 +39,6 @@ export default function Live2DWidget() {
         cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
         tools: ["hitokoto", "switch-model", "switch-texture", "photo", "info", "quit"],
       });
-      // Override default model with Miku after widget DOM is ready
-      setTimeout(() => {
-        win.loadlive2d?.("live2d", MIKU);
-      }, 400);
     }).catch(console.error);
 
     return () => {

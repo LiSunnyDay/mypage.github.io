@@ -29,18 +29,9 @@ export default function Live2DWidget() {
       });
     }
 
-    // Clear any invalid modelId left by a previous version (e.g. the "-1" sentinel)
-    const storedId = localStorage.getItem("modelId");
-    if (storedId !== null && (isNaN(parseInt(storedId)) || parseInt(storedId) < 0)) {
-      localStorage.removeItem("modelId");
-    }
-
-    // Default to 22娘 (fghrsh model index 2) for first-time visitors.
-    // initWidget reads localStorage.modelId on startup; setting it here before
-    // the call overrides its built-in default of index 1 (Tia).
-    if (localStorage.getItem("modelId") === null) {
-      localStorage.setItem("modelId", "2");
-    }
+    // Always start with 22娘. Set modelId=2 so initWidget knows the current group,
+    // then override the canvas with the self-hosted local model for instant load.
+    localStorage.setItem("modelId", "2");
 
     Promise.all([
       load("/live2d/waifu.css", "css"),
@@ -72,6 +63,12 @@ export default function Live2DWidget() {
         cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
         tools: ["hitokoto", "switch-model", "switch-texture", "photo", "info", "quit"],
       });
+
+      // Load 22娘 from self-hosted files for instant display — no CDN wait on first paint.
+      // modelId stays "2" so switch-model correctly continues from the bilibili group.
+      setTimeout(() => {
+        win.loadlive2d?.("live2d", "/live2d/22niang/index.json");
+      }, 800);
     }).catch(console.error);
 
     return () => {

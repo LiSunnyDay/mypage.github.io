@@ -88,6 +88,26 @@ const works = [
 
 主角为：【罗芭】`,
   },
+  {
+    id: "E",
+    title: "绿沙沙拿铁",
+    subtitle: "瑞幸咖啡 · 新品夏日海报",
+    src: `${base}/portfolio/5.png`,
+    model: "GPT-image-2",
+    color: "#86EFAC",
+    prompt: `生成一个瑞幸咖啡的新品海报，主题是绿沙沙拿铁，绿豆口味的，让人感受到夏日的清凉，右下角加入官方的微信公众号点单入口，自己关键性的品牌符号，左上角打入官方logo，整体清新，风格活泼`,
+  },
+  {
+    id: "F",
+    title: "雨后见",
+    subtitle: "电影感竖版海报",
+    src: `${base}/portfolio/6.png`,
+    model: "GPT-image-2",
+    color: "#BAE6FD",
+    prompt: `生成一张竖版电影感角色海报，小清新风格。画面是雨后初夏的清晨，一个年轻角色站在安静的小镇街角，周围有绿植、浅色墙面、湿润的石板路和柔和阳光。人物穿浅色简洁服装，神情安静温柔，带一点故事感，手里拿着一本书和一把透明伞。整体色彩以薄荷绿、奶白、浅蓝和柔和暖光为主，清新、干净、治愈。电影海报构图，主体突出，浅景深，自然光，高级质感，上方留出标题空间，下方留出信息排版空间，画面细腻，氛围感强。
+
+负面提示词：暗黑风，赛博朋克，过度浓艳色彩，杂乱背景，夸张特效，恐怖氛围，成人性感服装，文字乱码，低清晰度，脸部变形，手部错误，过度磨皮`,
+  },
 ];
 
 function ImageLightbox({ index, onClose }: { index: number; onClose: () => void }) {
@@ -256,7 +276,7 @@ export default function Portfolio() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid sm:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {works.map((work, i) => (
             <WorkCard
               key={work.id}

@@ -2,39 +2,33 @@
 
 import { useEffect } from "react";
 
-const CDN = "https://cdn.jsdelivr.net/npm";
-
-const models = [
-  { path: `${CDN}/live2d-widget-model-miku/assets/miku.model.json`,        name: "初音未来" },
-  { path: `${CDN}/live2d-widget-model-shizuku/assets/shizuku.model.json`,  name: "静玖"     },
-  { path: `${CDN}/live2d-widget-model-koharu/assets/koharu.model.json`,    name: "小春"     },
-  { path: `${CDN}/live2d-widget-model-hibiki/assets/hibiki.model.json`,    name: "响"       },
-  { path: `${CDN}/live2d-widget-model-izumi/assets/izumi.model.json`,      name: "泉"       },
-  { path: `${CDN}/live2d-widget-model-haruto/assets/haruto.model.json`,    name: "悠斗"     },
-  { path: `${CDN}/live2d-widget-model-tororo/assets/tororo.model.json`,    name: "托罗"     },
-  { path: `${CDN}/live2d-widget-model-wanko/assets/wanko.model.json`,      name: "汪子"     },
-  { path: `${CDN}/live2d-widget-model-unitychan/assets/unitychan.model.json`, name: "Unity酱" },
-  { path: `${CDN}/live2d-widget-model-chitose/assets/chitose.model.json`,  name: "千岁"     },
-];
+const CDN = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest";
+const MODEL_CDN = "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/";
 
 export default function Live2DWidget() {
   useEffect(() => {
-    import("oh-my-live2d").then(({ loadOml2d }) => {
-      loadOml2d({
-        models,
-        primaryColor: "#39C5BB",
-        tips: {
-          style: { width: 180, fontSize: 13 },
-          idleTips: {
-            wordTheDay: false,
-            tips: [
-              { message: ["今天也要加油哦～"], duration: 4000 },
-              { message: ["点击右侧按钮可以换角色 ↓"], duration: 4000 },
-            ],
-          },
-        },
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `${CDN}/waifu.css`;
+    document.head.appendChild(link);
+
+    const script = document.createElement("script");
+    script.src = `${CDN}/waifu-tips.js`;
+    script.async = true;
+    script.onload = () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).initWidget({
+        waifuPath: `${CDN}/waifu-tips.json`,
+        cdnPath: MODEL_CDN,
+        tools: ["hitokoto", "switch_model", "switch_texture", "photo", "info", "quit"],
       });
-    });
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.head.contains(link)) document.head.removeChild(link);
+      if (document.body.contains(script)) document.body.removeChild(script);
+    };
   }, []);
 
   return null;

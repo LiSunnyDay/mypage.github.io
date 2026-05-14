@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Star, ChevronDown, ChevronUp, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -28,7 +27,6 @@ const works = [
     src: `${base}/portfolio/3.png`,
     model: "GPT-image-2",
     color: "#FDA4AF",
-    aspectRatio: "3/4",
     prompt: kawaiPrompt,
   },
   {
@@ -38,7 +36,6 @@ const works = [
     src: `${base}/portfolio/4.png`,
     model: "GPT-image-2",
     color: "#BAE6FD",
-    aspectRatio: "4/3",
     prompt: kawaiPrompt,
   },
   {
@@ -48,7 +45,6 @@ const works = [
     src: `${base}/portfolio/1.jpg`,
     model: "GPT-image-2",
     color: "#C4B5FD",
-    aspectRatio: "3/4",
     prompt: `根据 【芙莉莲】 自动生成一张收藏版史诗叙事海报：
 
 巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
@@ -74,7 +70,6 @@ const works = [
     src: `${base}/portfolio/2.jpg`,
     model: "GPT-image-2",
     color: "#FFD93D",
-    aspectRatio: "3/4",
     prompt: `根据 【罗芭/史诗感】 自动生成一张收藏版史诗叙事海报：
 
 巨大优雅的人物侧脸剪影作为外轮廓，剪影内部自动生长出最契合该主题的完整世界观、标志性场景、角色关系、象征符号、关键建筑、生物、道具与氛围。
@@ -180,14 +175,13 @@ function WorkCard({ work, index, onImageClick }: {
       {/* Image */}
       <div
         className="border-b-4 border-black relative overflow-hidden cursor-pointer group"
-        style={{ aspectRatio: work.aspectRatio, maxHeight: "600px" }}
         onClick={() => onImageClick(index)}
       >
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={work.src}
           alt={work.title}
-          fill
-          className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
+          className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
           <div className="border-4 border-white bg-black/70 text-white font-black text-sm px-4 py-2 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">

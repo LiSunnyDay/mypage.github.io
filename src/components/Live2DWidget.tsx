@@ -35,6 +35,13 @@ export default function Live2DWidget() {
       localStorage.removeItem("modelId");
     }
 
+    // Default to 22娘 (fghrsh model index 2) for first-time visitors.
+    // initWidget reads localStorage.modelId on startup; setting it here before
+    // the call overrides its built-in default of index 1 (Tia).
+    if (localStorage.getItem("modelId") === null) {
+      localStorage.setItem("modelId", "2");
+    }
+
     Promise.all([
       load("/live2d/waifu.css", "css"),
       load("/live2d/live2d.min.js", "js"),

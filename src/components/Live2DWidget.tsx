@@ -2,32 +2,53 @@
 
 import { useEffect } from "react";
 
-const CDN = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest";
-const MODEL_CDN = "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/";
+const MIKU = "https://cdn.jsdelivr.net/npm/live2d-widget-model-miku/assets/miku.model.json";
 
 export default function Live2DWidget() {
   useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = `${CDN}/waifu.css`;
-    document.head.appendChild(link);
+    const tags: (HTMLLinkElement | HTMLScriptElement)[] = [];
 
-    const script = document.createElement("script");
-    script.src = `${CDN}/waifu-tips.js`;
-    script.async = true;
-    script.onload = () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).initWidget({
-        waifuPath: `${CDN}/waifu-tips.json`,
-        cdnPath: MODEL_CDN,
-        tools: ["hitokoto", "switch_model", "switch_texture", "photo", "info", "quit"],
+    function load(url: string, type: "css" | "js"): Promise<void> {
+      return new Promise((resolve, reject) => {
+        let tag: HTMLLinkElement | HTMLScriptElement;
+        if (type === "css") {
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = url;
+          tag = link;
+          document.head.appendChild(tag);
+        } else {
+          const script = document.createElement("script");
+          script.src = url;
+          tag = script;
+          document.body.appendChild(tag);
+        }
+        tag.onload = () => resolve();
+        tag.onerror = () => reject(new Error(`Failed: ${url}`));
+        tags.push(tag);
       });
-    };
-    document.body.appendChild(script);
+    }
+
+    Promise.all([
+      load("/live2d/waifu.css", "css"),
+      load("/live2d/live2d.min.js", "js"),
+      load("/live2d/waifu-tips.js", "js"),
+    ]).then(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const win = window as any;
+      win.initWidget({
+        waifuPath: "/live2d/waifu-tips.json",
+        cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
+        tools: ["hitokoto", "switch-model", "switch-texture", "photo", "info", "quit"],
+      });
+      // Override default model with Miku after widget DOM is ready
+      setTimeout(() => {
+        win.loadlive2d?.("live2d", MIKU);
+      }, 400);
+    }).catch(console.error);
 
     return () => {
-      if (document.head.contains(link)) document.head.removeChild(link);
-      if (document.body.contains(script)) document.body.removeChild(script);
+      tags.forEach(t => t.parentNode?.removeChild(t));
     };
   }, []);
 

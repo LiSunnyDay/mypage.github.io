@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 
-// Miku from npm CDN — same CDN domain as fghrsh model data
-const MIKU = "https://fastly.jsdelivr.net/npm/live2d-widget-model-miku/assets/miku.model.json";
+// Miku model self-hosted in public/live2d/miku/ — no CDN dependency
+const MIKU = "/live2d/miku/miku.model.json";
 
 export default function Live2DWidget() {
   useEffect(() => {
@@ -42,8 +42,7 @@ export default function Live2DWidget() {
       const win = window as any;
       win.initWidget({
         waifuPath: "/live2d/waifu-tips.json",
-        // Use fastly CDN per fghrsh blog post — better global accessibility than cdn subdomain
-        cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
+        cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
         tools: ["hitokoto", "switch-model", "switch-texture", "photo", "info", "quit"],
       });
       // After initWidget sets up the DOM and canvas, load Miku as the initial character

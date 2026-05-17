@@ -10,22 +10,7 @@ const marqueeItems = [
 
 export default function Hero() {
   return (
-    <section id="home" className="min-h-screen pt-16 flex flex-col relative overflow-hidden">
-      {/* Video background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ zIndex: 0 }}
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260324_151826_c7218672-6e92-402c-9e45-f1e0f454bdc4.mp4"
-      />
-      {/* Semi-transparent overlay to keep text readable */}
-      <div className="absolute inset-0 bg-white/55" style={{ zIndex: 0 }} />
-
-      {/* Content above video */}
-      <div className="relative flex flex-col flex-1" style={{ zIndex: 1 }}>
+    <section id="home" className="min-h-screen pt-16 flex flex-col">
       {/* Marquee Banner */}
       <div className="border-b-4 border-black bg-[#FFD93D] overflow-hidden py-3">
         <div className="flex animate-marquee whitespace-nowrap gap-12" style={{ width: "max-content" }}>
@@ -198,7 +183,6 @@ export default function Hero() {
             </span>
           ))}
         </div>
-      </div>
       </div>
     </section>
   );

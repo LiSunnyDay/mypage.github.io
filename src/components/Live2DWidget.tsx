@@ -115,8 +115,10 @@ export default function Live2DWidget() {
         docListeners.push(["mouseover", onSectionHover as EventListener]);
 
         // --- Drag support ---
-        const waifu = document.getElementById("waifu");
-        if (!waifu) return;
+        const waifuEl = document.getElementById("waifu");
+        if (!waifuEl) return;
+        // Assign to a typed const so nested function declarations see HTMLElement, not null
+        const waifu: HTMLElement = waifuEl;
 
         let dragging = false;
         let ox = 0, oy = 0; // cursor offset within element at drag start
